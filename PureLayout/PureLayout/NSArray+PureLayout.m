@@ -42,8 +42,7 @@
 /**
  Activates the constraints in this array.
  */
-- (void)autoInstallConstraints
-{
+- (void)autoInstallConstraints {
 #if __PureLayout_MinBaseSDK_iOS_8_0 || __PureLayout_MinBaseSDK_OSX_10_10
     if ([NSLayoutConstraint respondsToSelector:@selector(activateConstraints:)]) {
         for (id object in self) {
@@ -59,10 +58,10 @@
         return;
     }
 #endif /* __PureLayout_MinBaseSDK_iOS_8_0 || __PureLayout_MinBaseSDK_OSX_10_10 */
-    
+
     for (id object in self) {
         if ([object isKindOfClass:[NSLayoutConstraint class]]) {
-            [((NSLayoutConstraint *)object) autoInstall];
+            [((NSLayoutConstraint *) object) autoInstall];
         }
     }
 }
@@ -70,18 +69,17 @@
 /**
  Deactivates the constraints in this array.
  */
-- (void)autoRemoveConstraints
-{
+- (void)autoRemoveConstraints {
 #if __PureLayout_MinBaseSDK_iOS_8_0 || __PureLayout_MinBaseSDK_OSX_10_10
     if ([NSLayoutConstraint respondsToSelector:@selector(deactivateConstraints:)]) {
         [NSLayoutConstraint deactivateConstraints:self];
         return;
     }
 #endif /* __PureLayout_MinBaseSDK_iOS_8_0 || __PureLayout_MinBaseSDK_OSX_10_10 */
-    
+
     for (id object in self) {
         if ([object isKindOfClass:[NSLayoutConstraint class]]) {
-            [((NSLayoutConstraint *)object) autoRemove];
+            [((NSLayoutConstraint *) object) autoRemove];
         }
     }
 }
@@ -96,11 +94,10 @@
  @param identifier A string used to identify the constraints in this array.
  @return This array.
  */
-- (instancetype)autoIdentifyConstraints:(NSString *)identifier
-{
+- (instancetype)autoIdentifyConstraints:(NSString *)identifier {
     for (id object in self) {
         if ([object isKindOfClass:[NSLayoutConstraint class]]) {
-            [((NSLayoutConstraint *)object) autoIdentify:identifier];
+            [((NSLayoutConstraint *) object) autoIdentify:identifier];
         }
     }
     return self;
@@ -118,14 +115,13 @@
  @param edge The edge to which the views will be aligned.
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoAlignViewsToEdge:(ALEdge)edge
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoAlignViewsToEdge:(ALEdge)edge {
     NSAssert([self al_containsMinimumNumberOfViews:2], @"This array must contain at least 2 views.");
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     ALView *previousView = nil;
     for (id object in self) {
         if ([object isKindOfClass:[ALView class]]) {
-            ALView *view = (ALView *)object;
+            ALView *view = (ALView *) object;
             view.translatesAutoresizingMaskIntoConstraints = NO;
             if (previousView) {
                 [constraints addObject:[view autoPinEdge:edge toEdge:edge ofView:previousView]];
@@ -143,14 +139,13 @@
  @param axis The axis to which the views will be aligned.
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoAlignViewsToAxis:(ALAxis)axis
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoAlignViewsToAxis:(ALAxis)axis {
     NSAssert([self al_containsMinimumNumberOfViews:2], @"This array must contain at least 2 views.");
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     ALView *previousView = nil;
     for (id object in self) {
         if ([object isKindOfClass:[ALView class]]) {
-            ALView *view = (ALView *)object;
+            ALView *view = (ALView *) object;
             view.translatesAutoresizingMaskIntoConstraints = NO;
             if (previousView) {
                 [constraints addObject:[view autoAlignAxis:axis toSameAxisOfView:previousView]];
@@ -168,14 +163,13 @@
  @param dimension The dimension to match for all of the views.
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoMatchViewsDimension:(ALDimension)dimension
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoMatchViewsDimension:(ALDimension)dimension {
     NSAssert([self al_containsMinimumNumberOfViews:2], @"This array must contain at least 2 views.");
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     ALView *previousView = nil;
     for (id object in self) {
         if ([object isKindOfClass:[ALView class]]) {
-            ALView *view = (ALView *)object;
+            ALView *view = (ALView *) object;
             view.translatesAutoresizingMaskIntoConstraints = NO;
             if (previousView) {
                 [constraints addObject:[view autoMatchDimension:dimension toDimension:dimension ofView:previousView]];
@@ -194,13 +188,12 @@
  @param size The size to set the given dimension of each view to.
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoSetViewsDimension:(ALDimension)dimension toSize:(CGFloat)size
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoSetViewsDimension:(ALDimension)dimension toSize:(CGFloat)size {
     NSAssert([self al_containsMinimumNumberOfViews:1], @"This array must contain at least 1 view.");
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     for (id object in self) {
         if ([object isKindOfClass:[ALView class]]) {
-            ALView *view = (ALView *)object;
+            ALView *view = (ALView *) object;
             view.translatesAutoresizingMaskIntoConstraints = NO;
             [constraints addObject:[view autoSetDimension:dimension toSize:size]];
         }
@@ -215,8 +208,7 @@
  @param size The size to set each view's dimensions to.
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoSetViewsDimensionsToSize:(CGSize)size
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoSetViewsDimensionsToSize:(CGSize)size {
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     [constraints addObjectsFromArray:[self autoSetViewsDimension:ALDimensionWidth toSize:size.width]];
     [constraints addObjectsFromArray:[self autoSetViewsDimension:ALDimensionHeight toSize:size.height]];
@@ -236,8 +228,7 @@
  */
 - (__NSArray_of(NSLayoutConstraint *) *)autoDistributeViewsAlongAxis:(ALAxis)axis
                                                            alignedTo:(ALAttribute)alignment
-                                                    withFixedSpacing:(CGFloat)spacing
-{
+                                                    withFixedSpacing:(CGFloat)spacing {
     return [self autoDistributeViewsAlongAxis:axis
                                     alignedTo:alignment
                              withFixedSpacing:spacing
@@ -258,8 +249,7 @@
 - (__NSArray_of(NSLayoutConstraint *) *)autoDistributeViewsAlongAxis:(ALAxis)axis
                                                            alignedTo:(ALAttribute)alignment
                                                     withFixedSpacing:(CGFloat)spacing
-                                                        insetSpacing:(BOOL)shouldSpaceInsets
-{
+                                                        insetSpacing:(BOOL)shouldSpaceInsets {
     return [self autoDistributeViewsAlongAxis:axis
                                     alignedTo:alignment
                              withFixedSpacing:spacing
@@ -284,8 +274,7 @@
                                                            alignedTo:(ALAttribute)alignment
                                                     withFixedSpacing:(CGFloat)spacing
                                                         insetSpacing:(BOOL)shouldSpaceInsets
-                                                        matchedSizes:(BOOL)shouldMatchSizes
-{
+                                                        matchedSizes:(BOOL)shouldMatchSizes {
     NSAssert([self al_containsMinimumNumberOfViews:1], @"This array must contain at least 1 view to distribute.");
     ALDimension matchedDimension;
     ALEdge firstEdge, lastEdge;
@@ -310,12 +299,12 @@
     }
     CGFloat leadingSpacing = shouldSpaceInsets ? spacing : 0.0;
     CGFloat trailingSpacing = shouldSpaceInsets ? spacing : 0.0;
-    
+
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     ALView *previousView = nil;
     for (id object in self) {
         if ([object isKindOfClass:[ALView class]]) {
-            ALView *view = (ALView *)object;
+            ALView *view = (ALView *) object;
             view.translatesAutoresizingMaskIntoConstraints = NO;
             if (previousView) {
                 // Second, Third, ... View
@@ -351,8 +340,7 @@
  */
 - (__NSArray_of(NSLayoutConstraint *) *)autoDistributeViewsAlongAxis:(ALAxis)axis
                                                            alignedTo:(ALAttribute)alignment
-                                                       withFixedSize:(CGFloat)size
-{
+                                                       withFixedSize:(CGFloat)size {
     return [self autoDistributeViewsAlongAxis:axis
                                     alignedTo:alignment
                                 withFixedSize:size
@@ -373,8 +361,7 @@
 - (__NSArray_of(NSLayoutConstraint *) *)autoDistributeViewsAlongAxis:(ALAxis)axis
                                                            alignedTo:(ALAttribute)alignment
                                                        withFixedSize:(CGFloat)size
-                                                        insetSpacing:(BOOL)shouldSpaceInsets
-{
+                                                        insetSpacing:(BOOL)shouldSpaceInsets {
     NSAssert([self al_containsMinimumNumberOfViews:1], @"This array must contain at least 1 view to distribute.");
     ALDimension fixedDimension;
     NSLayoutAttribute attribute;
@@ -406,7 +393,7 @@
     BOOL isRightToLeftLayout = [[NSApplication sharedApplication] userInterfaceLayoutDirection] == NSUserInterfaceLayoutDirectionRightToLeft;
 #endif /* TARGET_OS_IPHONE */
     BOOL shouldFlipOrder = isRightToLeftLayout && (axis != ALAxisVertical); // imitate the effect of leading/trailing when distributing horizontally
-    
+
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     __NSArray_of(ALView *) *views = [self al_copyViewsOnly];
     NSUInteger numberOfViews = [views count];
@@ -447,13 +434,12 @@
  
  @return The common superview for the views in this array.
  */
-- (ALView *)al_commonSuperviewOfViews
-{
+- (ALView *)al_commonSuperviewOfViews {
     ALView *commonSuperview = nil;
     ALView *previousView = nil;
     for (id object in self) {
         if ([object isKindOfClass:[ALView class]]) {
-            ALView *view = (ALView *)object;
+            ALView *view = (ALView *) object;
             if (previousView) {
                 commonSuperview = [view al_commonSuperviewWithView:commonSuperview];
             } else {
@@ -472,8 +458,7 @@
  @param minimumNumberOfViews The minimum number of views to check for.
  @return YES if this array contains at least the minimum number of views, NO otherwise.
  */
-- (BOOL)al_containsMinimumNumberOfViews:(NSUInteger)minimumNumberOfViews
-{
+- (BOOL)al_containsMinimumNumberOfViews:(NSUInteger)minimumNumberOfViews {
     NSUInteger numberOfViews = 0;
     for (id object in self) {
         if ([object isKindOfClass:[ALView class]]) {
@@ -491,8 +476,7 @@
  
  @return A new array containing only the views that are in this array.
  */
-- (__NSArray_of(ALView *) *)al_copyViewsOnly
-{
+- (__NSArray_of(ALView *) *)al_copyViewsOnly {
     __NSMutableArray_of(ALView *) *viewsOnlyArray = [NSMutableArray arrayWithCapacity:[self count]];
     for (id object in self) {
         if ([object isKindOfClass:[ALView class]]) {

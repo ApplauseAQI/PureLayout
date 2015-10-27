@@ -28,7 +28,6 @@
 
 #import "ALView+PureLayout.h"
 #import "NSLayoutConstraint+PureLayout.h"
-#import "NSArray+PureLayout.h"
 #import "PureLayout+Internal.h"
 
 
@@ -42,8 +41,7 @@
 /** 
  Creates and returns a new view that does not convert the autoresizing mask into constraints.
  */
-+ (instancetype)newAutoLayoutView
-{
++ (instancetype)newAutoLayoutView {
     ALView *view = [self new];
     view.translatesAutoresizingMaskIntoConstraints = NO;
     return view;
@@ -52,8 +50,7 @@
 /**
  Initializes and returns a new view that does not convert the autoresizing mask into constraints.
  */
-- (instancetype)initForAutoLayout
-{
+- (instancetype)initForAutoLayout {
     self = [self init];
     if (self) {
         self.translatesAutoresizingMaskIntoConstraints = NO;
@@ -64,8 +61,7 @@
 /**
  Configures an existing view to not convert the autoresizing mask into constraints and returns the view.
  */
-- (instancetype)configureForAutoLayout
-{
+- (instancetype)configureForAutoLayout {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     return self;
 }
@@ -78,8 +74,7 @@
  
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoCenterInSuperview
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoCenterInSuperview {
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     [constraints addObject:[self autoAlignAxisToSuperviewAxis:ALAxisHorizontal]];
     [constraints addObject:[self autoAlignAxisToSuperviewAxis:ALAxisVertical]];
@@ -92,12 +87,11 @@
  @param axis The axis of this view and of its superview to align.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoAlignAxisToSuperviewAxis:(ALAxis)axis
-{
+- (NSLayoutConstraint *)autoAlignAxisToSuperviewAxis:(ALAxis)axis {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     ALView *superview = self.superview;
     NSAssert(superview, @"View's superview must not be nil.\nView: %@", self);
-    return [self autoConstrainAttribute:(ALAttribute)axis toAttribute:(ALAttribute)axis ofView:superview];
+    return [self autoConstrainAttribute:(ALAttribute) axis toAttribute:(ALAttribute) axis ofView:superview];
 }
 
 #if __PureLayout_MinBaseSDK_iOS_8_0
@@ -107,8 +101,7 @@
  
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoCenterInSuperviewMargins
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoCenterInSuperviewMargins {
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     [constraints addObject:[self autoAlignAxisToSuperviewMarginAxis:ALAxisHorizontal]];
     [constraints addObject:[self autoAlignAxisToSuperviewMarginAxis:ALAxisVertical]];
@@ -121,13 +114,12 @@
  @param axis The axis of this view to align to the corresponding margin axis of its superview.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoAlignAxisToSuperviewMarginAxis:(ALAxis)axis
-{
+- (NSLayoutConstraint *)autoAlignAxisToSuperviewMarginAxis:(ALAxis)axis {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     ALView *superview = self.superview;
     NSAssert(superview, @"View's superview must not be nil.\nView: %@", self);
     ALMarginAxis marginAxis = [NSLayoutConstraint al_marginAxisForAxis:axis];
-    return [self autoConstrainAttribute:(ALAttribute)axis toAttribute:(ALAttribute)marginAxis ofView:superview];
+    return [self autoConstrainAttribute:(ALAttribute) axis toAttribute:(ALAttribute) marginAxis ofView:superview];
 }
 
 #endif /* __PureLayout_MinBaseSDK_iOS_8_0 */
@@ -141,8 +133,7 @@
  @param edge The edge of this view and its superview to pin.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoPinEdgeToSuperviewEdge:(ALEdge)edge
-{
+- (NSLayoutConstraint *)autoPinEdgeToSuperviewEdge:(ALEdge)edge {
     return [self autoPinEdgeToSuperviewEdge:edge withInset:0.0];
 }
 
@@ -153,8 +144,7 @@
  @param inset The amount to inset this view's edge from the superview's edge.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoPinEdgeToSuperviewEdge:(ALEdge)edge withInset:(CGFloat)inset
-{
+- (NSLayoutConstraint *)autoPinEdgeToSuperviewEdge:(ALEdge)edge withInset:(CGFloat)inset {
     return [self autoPinEdgeToSuperviewEdge:edge withInset:inset relation:NSLayoutRelationEqual];
 }
 
@@ -166,8 +156,7 @@
  @param relation Whether the inset should be at least, at most, or exactly equal to the given value.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoPinEdgeToSuperviewEdge:(ALEdge)edge withInset:(CGFloat)inset relation:(NSLayoutRelation)relation
-{
+- (NSLayoutConstraint *)autoPinEdgeToSuperviewEdge:(ALEdge)edge withInset:(CGFloat)inset relation:(NSLayoutRelation)relation {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     ALView *superview = self.superview;
     NSAssert(superview, @"View's superview must not be nil.\nView: %@", self);
@@ -188,8 +177,7 @@
  
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoPinEdgesToSuperviewEdges
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoPinEdgesToSuperviewEdges {
     return [self autoPinEdgesToSuperviewEdgesWithInsets:ALEdgeInsetsZero];
 }
 
@@ -200,8 +188,7 @@
  @param insets The insets for this view's edges from its superview's edges.
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoPinEdgesToSuperviewEdgesWithInsets:(ALEdgeInsets)insets
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoPinEdgesToSuperviewEdgesWithInsets:(ALEdgeInsets)insets {
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     [constraints addObject:[self autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:insets.top]];
     [constraints addObject:[self autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:insets.left]];
@@ -219,8 +206,7 @@
  @param edge The edge of this view to exclude in pinning to its superview; this method will not apply any constraint to it.
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoPinEdgesToSuperviewEdgesWithInsets:(ALEdgeInsets)insets excludingEdge:(ALEdge)edge
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoPinEdgesToSuperviewEdgesWithInsets:(ALEdgeInsets)insets excludingEdge:(ALEdge)edge {
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     if (edge != ALEdgeTop) {
         [constraints addObject:[self autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:insets.top]];
@@ -238,15 +224,14 @@
 }
 
 #if __PureLayout_MinBaseSDK_iOS_8_0
-        
+
 /**
  Pins the given edge of the view to the corresponding margin of its superview.
  
  @param edge The edge of this view to pin to the corresponding margin of its superview.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoPinEdgeToSuperviewMargin:(ALEdge)edge
-{
+- (NSLayoutConstraint *)autoPinEdgeToSuperviewMargin:(ALEdge)edge {
     return [self autoPinEdgeToSuperviewMargin:edge relation:NSLayoutRelationEqual];
 }
 
@@ -257,8 +242,7 @@
  @param relation Whether the edge should be inset by at least, at most, or exactly the superview's margin.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoPinEdgeToSuperviewMargin:(ALEdge)edge relation:(NSLayoutRelation)relation
-{
+- (NSLayoutConstraint *)autoPinEdgeToSuperviewMargin:(ALEdge)edge relation:(NSLayoutRelation)relation {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     ALView *superview = self.superview;
     NSAssert(superview, @"View's superview must not be nil.\nView: %@", self);
@@ -271,16 +255,15 @@
         }
     }
     ALMargin margin = [NSLayoutConstraint al_marginForEdge:edge];
-    return [self autoConstrainAttribute:(ALAttribute)edge toAttribute:(ALAttribute)margin ofView:superview withOffset:0.0 relation:relation];
+    return [self autoConstrainAttribute:(ALAttribute) edge toAttribute:(ALAttribute) margin ofView:superview withOffset:0.0 relation:relation];
 }
-        
+
 /**
  Pins the edges of the view to the margins of its superview.
  
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoPinEdgesToSuperviewMargins
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoPinEdgesToSuperviewMargins {
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     [constraints addObject:[self autoPinEdgeToSuperviewMargin:ALEdgeTop]];
     [constraints addObject:[self autoPinEdgeToSuperviewMargin:ALEdgeLeading]];
@@ -295,8 +278,7 @@
  @param edge The edge of this view to exclude in pinning to its superview; this method will not apply any constraint to it.
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoPinEdgesToSuperviewMarginsExcludingEdge:(ALEdge)edge
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoPinEdgesToSuperviewMarginsExcludingEdge:(ALEdge)edge {
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     if (edge != ALEdgeTop) {
         [constraints addObject:[self autoPinEdgeToSuperviewMargin:ALEdgeTop]];
@@ -326,8 +308,7 @@
  @param otherView The other view to pin to. Must be in the same view hierarchy as this view.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoPinEdge:(ALEdge)edge toEdge:(ALEdge)toEdge ofView:(ALView *)otherView
-{
+- (NSLayoutConstraint *)autoPinEdge:(ALEdge)edge toEdge:(ALEdge)toEdge ofView:(ALView *)otherView {
     return [self autoPinEdge:edge toEdge:toEdge ofView:otherView withOffset:0.0];
 }
 
@@ -340,8 +321,7 @@
  @param offset The offset between the edge of this view and the edge of the other view.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoPinEdge:(ALEdge)edge toEdge:(ALEdge)toEdge ofView:(ALView *)otherView withOffset:(CGFloat)offset
-{
+- (NSLayoutConstraint *)autoPinEdge:(ALEdge)edge toEdge:(ALEdge)toEdge ofView:(ALView *)otherView withOffset:(CGFloat)offset {
     return [self autoPinEdge:edge toEdge:toEdge ofView:otherView withOffset:offset relation:NSLayoutRelationEqual];
 }
 
@@ -355,9 +335,8 @@
  @param relation Whether the offset should be at least, at most, or exactly equal to the given value.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoPinEdge:(ALEdge)edge toEdge:(ALEdge)toEdge ofView:(ALView *)otherView withOffset:(CGFloat)offset relation:(NSLayoutRelation)relation
-{
-    return [self autoConstrainAttribute:(ALAttribute)edge toAttribute:(ALAttribute)toEdge ofView:otherView withOffset:offset relation:relation];
+- (NSLayoutConstraint *)autoPinEdge:(ALEdge)edge toEdge:(ALEdge)toEdge ofView:(ALView *)otherView withOffset:(CGFloat)offset relation:(NSLayoutRelation)relation {
+    return [self autoConstrainAttribute:(ALAttribute) edge toAttribute:(ALAttribute) toEdge ofView:otherView withOffset:offset relation:relation];
 }
 
 
@@ -370,8 +349,7 @@
  @param otherView The other view to align to. Must be in the same view hierarchy as this view.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoAlignAxis:(ALAxis)axis toSameAxisOfView:(ALView *)otherView
-{
+- (NSLayoutConstraint *)autoAlignAxis:(ALAxis)axis toSameAxisOfView:(ALView *)otherView {
     return [self autoAlignAxis:axis toSameAxisOfView:otherView withOffset:0.0];
 }
 
@@ -383,9 +361,8 @@
  @param offset The offset between the axis of this view and the axis of the other view.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoAlignAxis:(ALAxis)axis toSameAxisOfView:(ALView *)otherView withOffset:(CGFloat)offset
-{
-    return [self autoConstrainAttribute:(ALAttribute)axis toAttribute:(ALAttribute)axis ofView:otherView withOffset:offset];
+- (NSLayoutConstraint *)autoAlignAxis:(ALAxis)axis toSameAxisOfView:(ALView *)otherView withOffset:(CGFloat)offset {
+    return [self autoConstrainAttribute:(ALAttribute) axis toAttribute:(ALAttribute) axis ofView:otherView withOffset:offset];
 }
 
 /**
@@ -396,9 +373,8 @@
  @param multiplier The multiplier between the axis of this view and the axis of the other view.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoAlignAxis:(ALAxis)axis toSameAxisOfView:(ALView *)otherView withMultiplier:(CGFloat)multiplier
-{
-    return [self autoConstrainAttribute:(ALAttribute)axis toAttribute:(ALAttribute)axis ofView:otherView withMultiplier:multiplier];
+- (NSLayoutConstraint *)autoAlignAxis:(ALAxis)axis toSameAxisOfView:(ALView *)otherView withMultiplier:(CGFloat)multiplier {
+    return [self autoConstrainAttribute:(ALAttribute) axis toAttribute:(ALAttribute) axis ofView:otherView withMultiplier:multiplier];
 }
 
 
@@ -412,8 +388,7 @@
  @param otherView The other view to match to. Must be in the same view hierarchy as this view.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoMatchDimension:(ALDimension)dimension toDimension:(ALDimension)toDimension ofView:(ALView *)otherView
-{
+- (NSLayoutConstraint *)autoMatchDimension:(ALDimension)dimension toDimension:(ALDimension)toDimension ofView:(ALView *)otherView {
     return [self autoMatchDimension:dimension toDimension:toDimension ofView:otherView withOffset:0.0];
 }
 
@@ -426,8 +401,7 @@
  @param offset The offset between the dimension of this view and the dimension of the other view.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoMatchDimension:(ALDimension)dimension toDimension:(ALDimension)toDimension ofView:(ALView *)otherView withOffset:(CGFloat)offset
-{
+- (NSLayoutConstraint *)autoMatchDimension:(ALDimension)dimension toDimension:(ALDimension)toDimension ofView:(ALView *)otherView withOffset:(CGFloat)offset {
     return [self autoMatchDimension:dimension toDimension:toDimension ofView:otherView withOffset:offset relation:NSLayoutRelationEqual];
 }
 
@@ -441,9 +415,8 @@
  @param relation Whether the offset should be at least, at most, or exactly equal to the given value.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoMatchDimension:(ALDimension)dimension toDimension:(ALDimension)toDimension ofView:(ALView *)otherView withOffset:(CGFloat)offset relation:(NSLayoutRelation)relation
-{
-    return [self autoConstrainAttribute:(ALAttribute)dimension toAttribute:(ALAttribute)toDimension ofView:otherView withOffset:offset relation:relation];
+- (NSLayoutConstraint *)autoMatchDimension:(ALDimension)dimension toDimension:(ALDimension)toDimension ofView:(ALView *)otherView withOffset:(CGFloat)offset relation:(NSLayoutRelation)relation {
+    return [self autoConstrainAttribute:(ALAttribute) dimension toAttribute:(ALAttribute) toDimension ofView:otherView withOffset:offset relation:relation];
 }
 
 /**
@@ -455,8 +428,7 @@
  @param multiplier The multiple of the other view's given dimension that this view's given dimension should be.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoMatchDimension:(ALDimension)dimension toDimension:(ALDimension)toDimension ofView:(ALView *)otherView withMultiplier:(CGFloat)multiplier
-{
+- (NSLayoutConstraint *)autoMatchDimension:(ALDimension)dimension toDimension:(ALDimension)toDimension ofView:(ALView *)otherView withMultiplier:(CGFloat)multiplier {
     return [self autoMatchDimension:dimension toDimension:toDimension ofView:otherView withMultiplier:multiplier relation:NSLayoutRelationEqual];
 }
 
@@ -470,9 +442,8 @@
  @param relation Whether the multiple should be at least, at most, or exactly equal to the given value.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoMatchDimension:(ALDimension)dimension toDimension:(ALDimension)toDimension ofView:(ALView *)otherView withMultiplier:(CGFloat)multiplier relation:(NSLayoutRelation)relation
-{
-    return [self autoConstrainAttribute:(ALAttribute)dimension toAttribute:(ALAttribute)toDimension ofView:otherView withMultiplier:multiplier relation:relation];
+- (NSLayoutConstraint *)autoMatchDimension:(ALDimension)dimension toDimension:(ALDimension)toDimension ofView:(ALView *)otherView withMultiplier:(CGFloat)multiplier relation:(NSLayoutRelation)relation {
+    return [self autoConstrainAttribute:(ALAttribute) dimension toAttribute:(ALAttribute) toDimension ofView:otherView withMultiplier:multiplier relation:relation];
 }
 
 
@@ -484,8 +455,7 @@
  @param size The size to set this view's dimensions to.
  @return An array of constraints added.
  */
-- (__NSArray_of(NSLayoutConstraint *) *)autoSetDimensionsToSize:(CGSize)size
-{
+- (__NSArray_of(NSLayoutConstraint *) *)autoSetDimensionsToSize:(CGSize)size {
     __NSMutableArray_of(NSLayoutConstraint *) *constraints = [NSMutableArray new];
     [constraints addObject:[self autoSetDimension:ALDimensionWidth toSize:size.width]];
     [constraints addObject:[self autoSetDimension:ALDimensionHeight toSize:size.height]];
@@ -499,8 +469,7 @@
  @param size The size to set the given dimension to.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoSetDimension:(ALDimension)dimension toSize:(CGFloat)size
-{
+- (NSLayoutConstraint *)autoSetDimension:(ALDimension)dimension toSize:(CGFloat)size {
     return [self autoSetDimension:dimension toSize:size relation:NSLayoutRelationEqual];
 }
 
@@ -512,10 +481,9 @@
  @param relation Whether the size should be at least, at most, or exactly equal to the given value.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoSetDimension:(ALDimension)dimension toSize:(CGFloat)size relation:(NSLayoutRelation)relation
-{
+- (NSLayoutConstraint *)autoSetDimension:(ALDimension)dimension toSize:(CGFloat)size relation:(NSLayoutRelation)relation {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutAttribute layoutAttribute = [NSLayoutConstraint al_layoutAttributeForAttribute:(ALAttribute)dimension];
+    NSLayoutAttribute layoutAttribute = [NSLayoutConstraint al_layoutAttributeForAttribute:(ALAttribute) dimension];
     NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self attribute:layoutAttribute relatedBy:relation toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:size];
     [constraint autoInstall];
     return constraint;
@@ -530,8 +498,7 @@
  
  @param axis The axis to set the content compression resistance priority for.
  */
-- (void)autoSetContentCompressionResistancePriorityForAxis:(ALAxis)axis
-{
+- (void)autoSetContentCompressionResistancePriorityForAxis:(ALAxis)axis {
     NSAssert([NSLayoutConstraint al_isExecutingPriorityConstraintsBlock], @"%@ should only be called from within the block passed into the method +[autoSetPriority:forConstraints:]", NSStringFromSelector(_cmd));
     if ([NSLayoutConstraint al_isExecutingPriorityConstraintsBlock]) {
         self.translatesAutoresizingMaskIntoConstraints = NO;
@@ -550,8 +517,7 @@
  
  @param axis The axis to set the content hugging priority for.
  */
-- (void)autoSetContentHuggingPriorityForAxis:(ALAxis)axis
-{
+- (void)autoSetContentHuggingPriorityForAxis:(ALAxis)axis {
     NSAssert([NSLayoutConstraint al_isExecutingPriorityConstraintsBlock], @"%@ should only be called from within the block passed into the method +[autoSetPriority:forConstraints:]", NSStringFromSelector(_cmd));
     if ([NSLayoutConstraint al_isExecutingPriorityConstraintsBlock]) {
         self.translatesAutoresizingMaskIntoConstraints = NO;
@@ -576,8 +542,7 @@
  @param otherView The other view to constrain to. Must be in the same view hierarchy as this view.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoConstrainAttribute:(ALAttribute)attribute toAttribute:(ALAttribute)toAttribute ofView:(ALView *)otherView
-{
+- (NSLayoutConstraint *)autoConstrainAttribute:(ALAttribute)attribute toAttribute:(ALAttribute)toAttribute ofView:(ALView *)otherView {
     return [self autoConstrainAttribute:attribute toAttribute:toAttribute ofView:otherView withOffset:0.0];
 }
 
@@ -591,8 +556,7 @@
  @param offset The offset between the attribute of this view and the attribute of the other view.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoConstrainAttribute:(ALAttribute)attribute toAttribute:(ALAttribute)toAttribute ofView:(ALView *)otherView withOffset:(CGFloat)offset
-{
+- (NSLayoutConstraint *)autoConstrainAttribute:(ALAttribute)attribute toAttribute:(ALAttribute)toAttribute ofView:(ALView *)otherView withOffset:(CGFloat)offset {
     return [self autoConstrainAttribute:attribute toAttribute:toAttribute ofView:otherView withOffset:offset relation:NSLayoutRelationEqual];
 }
 
@@ -607,8 +571,7 @@
  @param relation Whether the offset should be at least, at most, or exactly equal to the given value.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoConstrainAttribute:(ALAttribute)attribute toAttribute:(ALAttribute)toAttribute ofView:(ALView *)otherView withOffset:(CGFloat)offset relation:(NSLayoutRelation)relation
-{
+- (NSLayoutConstraint *)autoConstrainAttribute:(ALAttribute)attribute toAttribute:(ALAttribute)toAttribute ofView:(ALView *)otherView withOffset:(CGFloat)offset relation:(NSLayoutRelation)relation {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutAttribute layoutAttribute = [NSLayoutConstraint al_layoutAttributeForAttribute:attribute];
     NSLayoutAttribute toLayoutAttribute = [NSLayoutConstraint al_layoutAttributeForAttribute:toAttribute];
@@ -627,8 +590,7 @@
  @param multiplier The multiplier between the attribute of this view and the attribute of the other view.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoConstrainAttribute:(ALAttribute)attribute toAttribute:(ALAttribute)toAttribute ofView:(ALView *)otherView withMultiplier:(CGFloat)multiplier
-{
+- (NSLayoutConstraint *)autoConstrainAttribute:(ALAttribute)attribute toAttribute:(ALAttribute)toAttribute ofView:(ALView *)otherView withMultiplier:(CGFloat)multiplier {
     return [self autoConstrainAttribute:attribute toAttribute:toAttribute ofView:otherView withMultiplier:multiplier relation:NSLayoutRelationEqual];
 }
 
@@ -643,8 +605,7 @@
  @param relation Whether the multiplier should be at least, at most, or exactly equal to the given value.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoConstrainAttribute:(ALAttribute)attribute toAttribute:(ALAttribute)toAttribute ofView:(ALView *)otherView withMultiplier:(CGFloat)multiplier relation:(NSLayoutRelation)relation
-{
+- (NSLayoutConstraint *)autoConstrainAttribute:(ALAttribute)attribute toAttribute:(ALAttribute)toAttribute ofView:(ALView *)otherView withMultiplier:(CGFloat)multiplier relation:(NSLayoutRelation)relation {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutAttribute layoutAttribute = [NSLayoutConstraint al_layoutAttributeForAttribute:attribute];
     NSLayoutAttribute toLayoutAttribute = [NSLayoutConstraint al_layoutAttributeForAttribute:toAttribute];
@@ -667,13 +628,11 @@
  @param inset The amount to inset this view's top edge from the layout guide.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoPinToTopLayoutGuideOfViewController:(UIViewController *)viewController withInset:(CGFloat)inset
-{
+- (NSLayoutConstraint *)autoPinToTopLayoutGuideOfViewController:(UIViewController *)viewController withInset:(CGFloat)inset {
     return [self autoPinToTopLayoutGuideOfViewController:viewController withInset:inset relation:NSLayoutRelationEqual];
 }
 
-- (NSLayoutConstraint *)autoPinToTopLayoutGuideOfViewController:(UIViewController *)viewController withInset:(CGFloat)inset relation:(NSLayoutRelation)relation
-{
+- (NSLayoutConstraint *)autoPinToTopLayoutGuideOfViewController:(UIViewController *)viewController withInset:(CGFloat)inset relation:(NSLayoutRelation)relation {
     if (__PureLayout_MinSysVer_iOS_7_0) {
         self.translatesAutoresizingMaskIntoConstraints = NO;
         NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTop relatedBy:relation toItem:viewController.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:inset];
@@ -694,13 +653,11 @@
  @param inset The amount to inset this view's bottom edge from the layout guide.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)autoPinToBottomLayoutGuideOfViewController:(UIViewController *)viewController withInset:(CGFloat)inset
-{
+- (NSLayoutConstraint *)autoPinToBottomLayoutGuideOfViewController:(UIViewController *)viewController withInset:(CGFloat)inset {
     return [self autoPinToBottomLayoutGuideOfViewController:viewController withInset:inset relation:NSLayoutRelationEqual];
 }
 
-- (NSLayoutConstraint *)autoPinToBottomLayoutGuideOfViewController:(UIViewController *)viewController withInset:(CGFloat)inset relation:(NSLayoutRelation)relation
-{
+- (NSLayoutConstraint *)autoPinToBottomLayoutGuideOfViewController:(UIViewController *)viewController withInset:(CGFloat)inset relation:(NSLayoutRelation)relation {
     // The bottom inset (and relation, if an inequality) is inverted to become an offset
     inset = -inset;
     if (relation == NSLayoutRelationLessThanOrEqual) {
@@ -733,8 +690,7 @@
  
  @param constraint The constraint to set the global priority on and then add to this view.
  */
-- (void)al_addConstraint:(NSLayoutConstraint *)constraint
-{
+- (void)al_addConstraint:(NSLayoutConstraint *)constraint {
     [NSLayoutConstraint al_applyGlobalStateToConstraint:constraint];
     if ([NSLayoutConstraint al_preventAutomaticConstraintInstallation]) {
         [[NSLayoutConstraint al_currentArrayOfCreatedConstraints] addObject:constraint];
@@ -749,8 +705,7 @@
  
  @return The common superview for the two views.
  */
-- (ALView *)al_commonSuperviewWithView:(ALView *)otherView
-{
+- (ALView *)al_commonSuperviewWithView:(ALView *)otherView {
     ALView *commonSuperview = nil;
     ALView *startView = self;
     do {
@@ -777,8 +732,7 @@
  @param axis The axis along which the views are distributed, used to validate the alignment attribute.
  @return The constraint added.
  */
-- (NSLayoutConstraint *)al_alignAttribute:(ALAttribute)attribute toView:(ALView *)otherView forAxis:(ALAxis)axis
-{
+- (NSLayoutConstraint *)al_alignAttribute:(ALAttribute)attribute toView:(ALView *)otherView forAxis:(ALAxis)axis {
     NSLayoutConstraint *constraint = nil;
     switch (attribute) {
         case ALAttributeVertical:
@@ -824,8 +778,8 @@
             NSAssert(axis == ALAxisVertical, @"Cannot align views that are distributed horizontally with ALAttributeTrailing.");
             constraint = [self autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:otherView];
             break;
-            
-        // All of the below attributes are invalid as alignment options. Listing them explicitly (even though they just fall through to the default case) to avoid an incomplete switch statement warning from the compiler.
+
+            // All of the below attributes are invalid as alignment options. Listing them explicitly (even though they just fall through to the default case) to avoid an incomplete switch statement warning from the compiler.
         case ALAttributeWidth:
         case ALAttributeHeight:
 #if __PureLayout_MinBaseSDK_iOS_8_0
